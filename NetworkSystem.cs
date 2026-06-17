@@ -118,7 +118,7 @@ namespace TrinyTokMod
 
             switch (cmd.code.ToLower())
             {
-                // ==== HELPFUL ====
+
                 case "heal_player":
                     player.statLife = player.statLifeMax2;
                     player.HealEffect(player.statLifeMax2, true);
@@ -142,7 +142,7 @@ namespace TrinyTokMod
                     player.QuickSpawnItem(player.GetSource_Misc("TrinyTok"), Terraria.ID.ItemID.ManaCrystal, 1);
                     break;
 
-                // ==== BUFFS ====
+
                 case "buff_speed":
                     player.AddBuff(Terraria.ID.BuffID.Swiftness, 60 * 30);
                     break;
@@ -184,20 +184,20 @@ namespace TrinyTokMod
                     player.AddBuff(Terraria.ID.BuffID.Calm, 60 * 30);
                     break;
 
-                // ==== TROLL ====
+
                 case "kill_player":
                     player.KillMe(Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} sent you to the shadow realm!"), 1000, 0);
                     break;
                 case "damage_player":
-                    player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} bit you!"), 50, 0);
+                    player.Hurt(new Player.HurtInfo() { DamageSource = Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} bit you!"), Damage = 50, HitDirection = 0 });
                     break;
                 case "damage_player_100":
-                    player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} smashed you!"), 100, 0);
+                    player.Hurt(new Player.HurtInfo() { DamageSource = Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} smashed you!"), Damage = 100, HitDirection = 0 });
                     break;
                 case "explode_player":
-                    player.Hurt(Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} blew you up!"), 150, 0);
+                    player.Hurt(new Player.HurtInfo() { DamageSource = Terraria.DataStructures.PlayerDeathReason.ByCustomReason($"{viewer} blew you up!"), Damage = 150, HitDirection = 0 });
                     for (int i = 0; i < 3; i++)
-                        Terraria.Projectile.NewProjectile(player.GetSource_Misc("TrinyTok"), player.Center.X + Main.rand.Next(-40, 40), player.Center.Y + Main.rand.Next(-40, 40), 0, 0, Terraria.ID.ProjectileID.Grenade, 40, 4f, Main.myPlayer);
+                        Terraria.Projectile.NewProjectile(player.GetSource_Misc("TrinyTok"), new Microsoft.Xna.Framework.Vector2(player.Center.X + Main.rand.Next(-40, 40), player.Center.Y + Main.rand.Next(-40, 40)), Microsoft.Xna.Framework.Vector2.Zero, Terraria.ID.ProjectileID.Grenade, 40, 4f, Main.myPlayer);
                     break;
                 case "debuff_on_fire":
                     player.AddBuff(Terraria.ID.BuffID.OnFire, 60 * 5);
@@ -257,7 +257,7 @@ namespace TrinyTokMod
                     player.Teleport(new Microsoft.Xna.Framework.Vector2(tpX, tpY), 1);
                     break;
 
-                // ==== SPAWNS ====
+
                 case "spawn_slime":
                     SpawnNPC(x + 200, y, Terraria.ID.NPCID.BlueSlime, viewer);
                     break;
@@ -286,7 +286,7 @@ namespace TrinyTokMod
                     SpawnNPC(x + 100, y, Terraria.ID.NPCID.Goldfish, viewer);
                     break;
 
-                // ==== BOSSES ====
+
                 case "spawn_king_slime":
                     SpawnNPC(x + 400, y - 400, Terraria.ID.NPCID.KingSlime, viewer);
                     break;
@@ -337,7 +337,7 @@ namespace TrinyTokMod
                     SpawnNPC(x, y - 600, Terraria.ID.NPCID.MoonLordCore, viewer);
                     break;
 
-                // ==== ENVIRONMENT ====
+
                 case "set_time_day":
                     Main.dayTime = true;
                     Main.time = 0;
@@ -391,7 +391,7 @@ namespace TrinyTokMod
                     Main.StartInvasion(Terraria.ID.InvasionID.PirateInvasion);
                     break;
 
-                // ==== ITEMS ====
+
                 case "give_copper_shortsword":
                     player.QuickSpawnItem(player.GetSource_Misc("TrinyTok"), Terraria.ID.ItemID.CopperShortsword, 1);
                     break;
@@ -436,8 +436,7 @@ namespace TrinyTokMod
                     break;
 
                 case "debuff_shimmer":
-                    // Sends player phasing through blocks downwards
-                    player.AddBuff(Terraria.ID.BuffID.Shimmer, 60 * 5);
+                    player.AddBuff(Terraria.ID.BuffID.Shimmer, 60 * 3);
                     break;
                 case "give_tombstone":
                     player.QuickSpawnItem(player.GetSource_Misc("TrinyTok"), Terraria.ID.ItemID.Tombstone, 1);
