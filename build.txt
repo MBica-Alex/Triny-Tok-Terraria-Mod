@@ -1,0 +1,5 @@
+displayName = Triny-Tok Native Mod
+author = Unknown
+version = 1.0.0
+homepage = 
+buildIgnore = .git, .vscode, *.md

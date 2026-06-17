@@ -1,0 +1,1 @@
+Native TikTok integration for Triny-Tok. Reads commands over TCP and triggers game events natively.
